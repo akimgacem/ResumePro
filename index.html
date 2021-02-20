@@ -1,8 +1,437 @@
-<html>
-	<head>
-		<title>ResumePro - Vera Project</title>
-	</head>
-	<body>
-		ResumePro
-	</body>
+﻿<html>
+<head>
+	<meta http-equiv="cache-control" content="max-age=0" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, minimal-ui" />
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true" />
+		
+	<meta name='apple-mobile-web-app-capable' content='yes' />
+	<meta name='full-screen' content='true' />
+    <meta name='screen-orientation' content='landscape' />
+    <meta name='x5-fullscreen' content='true' />
+	<meta name='360-fullscreen' content='true' />
+
+	<title>ResumePro - Vera Project</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+	
+
+	
+	<script>
+
+	var MenuCarousselCV = {};
+	
+	MenuCarousselCV.MenuSwipe = function (val){
+		var i;
+
+		for(i=0;i<MenuCarousselCV.subBlockNumber;i++){
+			valCurr = MenuCarousselCV.subBlock[i].style.left;
+			valCurr = valCurr.substring(0, valCurr.length-1);
+			valCurr = val + parseFloat(valCurr);
+			
+			//move left right 27.5%
+			//<-25% -> 100% ou <100%-> -25%
+			if(valCurr<-25){
+				valCurr = (-17.5+4*27.5);
+				MenuCarousselCV.swipeFocus++;
+			}else if(valCurr>100){
+				valCurr = (-17.5+0*27.5);	
+				MenuCarousselCV.swipeFocus--;
+			}
+				
+			MenuCarousselCV.subBlock[i].style.height="70%";
+			MenuCarousselCV.subBlock[i].style.width="25%";
+			MenuCarousselCV.subBlock[i].style.left = valCurr + "%";
+
+		}
+		
+		MenuCarousselCV.updateFocus();
+		
+	}
+	
+	MenuCarousselCV.updateFocus = function (){
+		MenuCarousselCV.swipeFocus %= MenuCarousselCV.subBlockNumber; 
+		var style = MenuCarousselCV.subBlock[MenuCarousselCV.swipeFocus].style;
+		//1.1
+		style.height = 70.0*1.1+"%";
+		style.width = 25*1.1+"%";
+		
+		var valCurr = style.left;
+		valCurr = valCurr.substring(0, valCurr.length-1);
+		valCurr = parseFloat(valCurr)-2.5*0.5;//6.25 = 31.25%-width:25%
+		style.left = valCurr + "%";
+		
+	}
+	
+	function main(){
+		//window.document.body.style.overflow = "hidden";
+		
+		MenuCarousselCV.div = document.getElementsByClassName('ScriptCVtemplate')[0];
+		MenuCarousselCV.div.innerHTML = "";
+		
+		var i;
+		var CSSText;
+		MenuCarousselCV.subBlock = [];
+		MenuCarousselCV.subBlockNumber = 5;
+		MenuCarousselCV.swipeFocus = 2;
+		for(i=0;i<MenuCarousselCV.subBlockNumber;i++){
+			CSSText = "position: absolute;left:"+(-17.5+i*27.5)+"%;height:70%;width:25%;background-color: #fff;";
+			MenuCarousselCV.subBlock[i] = document.createElement("div");
+			MenuCarousselCV.subBlock[i].id = "subBlock"+i;
+			MenuCarousselCV.subBlock[i].setAttribute("style", CSSText);
+			MenuCarousselCV.div.appendChild(MenuCarousselCV.subBlock[i]);
+		}
+		//button
+		//Left
+		CSSText = "position: absolute;left:0%;height:32px;width:32px;background-color: #f00;";
+		MenuCarousselCV.buttonLeft = document.createElement("div");
+		MenuCarousselCV.buttonLeft.id = "buttonLeft";
+		MenuCarousselCV.buttonLeft.setAttribute("style", CSSText);
+		MenuCarousselCV.buttonLeft.onclick = function(){MenuCarousselCV.MenuSwipe(-27.5);};
+		MenuCarousselCV.div.appendChild(MenuCarousselCV.buttonLeft);
+		
+		//Right
+		CSSText = "position: absolute;right:0%;height:32px;width:32px;background-color: #f00;";
+		MenuCarousselCV.buttonRight = document.createElement("div");
+		MenuCarousselCV.buttonRight.id = "buttonLeft";
+		MenuCarousselCV.buttonRight.setAttribute("style", CSSText);
+		MenuCarousselCV.buttonRight.onclick = function(){MenuCarousselCV.MenuSwipe(27.5);};
+		MenuCarousselCV.div.appendChild(MenuCarousselCV.buttonRight);
+		
+		
+		//move left right 27.5%
+		//<-25% -> 100% ou <100%-> -25%
+		
+		//drag
+		
+		
+		
+	};
+	
+	
+	
+	//window.addEventListener('resize', setWindowSize);
+	window.onload = main;
+
+	</script>
+
+</head>
+<body>
+	<!--div class="mainFrame">
+		<div class="topFrame">
+			Menu
+		</div>
+		<div class="contentFrame">
+			content<br>
+			bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>
+			bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>
+			bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>
+			bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>
+			bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>
+			bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>
+			bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>bla<br>
+		</div>
+	</div-->
+	<table style="background-color: #00ff00;border-collapse: collapse;border: 0px solid;border-color:red;width:100%;height:100%">
+		<tr>
+			<td style="background-color: #f46149;vertical-align: top;height: 45px;">
+				<div style="height:100%;">
+					#script-Menu
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="background-color: #f0f0f0;vertical-align: top;">
+				<div style="position: relative; top: -1px; left:-1px;overflow-x: hidden;overflow-y: auto;height:100%;width:100%;outline: 0px solid blue;">
+					
+					<main class="content"> 
+					<div style="text-align: center;border-collapse: collapse;border: 1px solid;border-color:green;margin-left: 0px;margin-right: 0px;">
+					#script-preload
+					</div>
+						<div style="text-align: center;border-collapse: collapse;border: 1px solid;border-color:green;">
+							<h1>Online Resume Builder</h1>
+							<h2>Create your professional resume in 15 minutes</h2> 
+							<div class="buttons">
+								<a href="https://app.resumegenius.com/resumes/new" class="btn btn-solid btn-gtm-hero">Build My Resume Now</a> 
+							</div>
+							<br><br>
+							<img src="./assets/img/img001.png" alt="#Image001" width="80%">
+						</div>
+
+						<div style="text-align: center;vertical-align: middle;background-color: #2b3a45;min-height:50%;border: 1px solid;border-color:green;">
+							<h2 style="color: #fff;">Top Companies Hire Our Customers</h2> 
+							<p style="color: #fff;">Build your resume and follow in the footsteps of <strong>over 10 million</strong> job seekers today!</p>
+							<br>
+							<div style="text-align: center;width:100%;display: inline-block;display: flex;align-items: center;flex-wrap: wrap;justify-content: center;">
+								<img src="./assets/img/verizon.svg" alt="verizon" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 0px;margin-left: 1.25em;">    
+								<img src="./assets/img/adidas.svg" alt="adidas" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 0px;margin-left: 1.25em;">     
+								<img src="./assets/img/amazon.svg" alt="amazon" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 0px;margin-left: 1.25em;">     
+								<img src="./assets/img/north-face.svg" alt="north-face" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 0px;margin-left: 1.25em;">     
+								<img src="./assets/img/ucla.svg" alt="ucla" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 0px;margin-left: 1.25em;">     
+								<img src="./assets/img/mercedes-benz.svg" alt="mercedes-benz" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 0px;margin-left: 1.25em;">     
+								<img src="./assets/img/marriott.svg" alt="marriott" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 0px;margin-left: 1.25em;">      
+							</div>
+						</div>
+						
+						<div style="text-align: center;vertical-align: middle;height:50%;border-collapse: collapse;border: 1px solid;border-color:green;">
+							<h2 style="font-size: 1.5em;">Job Seekers Love Our Resume Builder</h2>
+							#Script-trustpilot
+
+							<!--div class="trustpilot-widget" data-locale="en-US" data-template-id="53aa8912dec7e10d38f59f36" data-businessunit-id="54bd10c90000ff00057cd5b7" data-style-height="130px" data-style-width="100%" data-theme="light" data-stars="5" data-review-languages="en" style="position: relative;"><iframe frameborder="0" scrolling="no" title="Customer reviews powered by Trustpilot" loading="auto" src="https://widget.trustpilot.com/trustboxes/53aa8912dec7e10d38f59f36/index.html?templateId=53aa8912dec7e10d38f59f36&amp;businessunitId=54bd10c90000ff00057cd5b7#locale=en-US&amp;styleHeight=130px&amp;styleWidth=100%25&amp;theme=light&amp;stars=5&amp;reviewLanguages=en" style="position: relative; height: 130px; width: 100%; border-style: none; display: block; overflow: hidden;"></iframe></div-->
+
+						</div>
+
+						<div style="display:flex; flex-direction: column; text-align: center;vertical-align: middle;height:100%;border-collapse: collapse;border: 1px solid;border-color:green;">
+							<h2 style="font-size: 1.5em;">Proven Resume Templates</h2> 
+							<p>Choose from a library of classic templates that have landed thousands of people new jobs.</p>
+							<br>
+							<div class="ScriptCVtemplate" style="display: flex;align-items: center;justify-content: center;background-color: #e0e0e0;width:100%;height:100%;">
+								
+									#Script-CVtemplate(professional,modern,chicago,...)
+								
+							</div>
+						</div>
+						
+						<div style="display:flex; flex-direction: column; text-align: center;align-items: center;vertical-align: middle;border-collapse: collapse;border: 1px solid;border-color:green;">
+							<h2 style="font-size: 1.5em;">How our resume builder helps you land jobs faster</h2>
+							<div style="display: flex;align-items: center;justify-content: center;background-color: #e0e0e0;width:75%;height:100%;">
+								<table style="table-layout: fixed;width:100%;height:100%;border-collapse: collapse;">
+								<tr>
+									<td style="width:50%;border-collapse: collapse;border: 1px solid;border-color:green;">
+										<img src="./assets/img/Resume-Builder-Work-Experience-Bullets-Feature.svg" style="margin: 0 auto;display: block;height: auto;max-width: 100%;">    
+									</td>
+									<td style="width:50%;border: 1px solid;border-color:green;">
+									<h2 style="font-size: 1.5em;">Choose from 50,000+ job description bullet points</h2>
+									Our online software generates resume templates with thousands of perfectly written work experience bullet points for you to choose from, covering all industries. Just point and click to instantly place the work duties you performed onto your resume in bullet point format.
+									<div class="buttons">
+										<a href="https://app.resumegenius.com/resumes/new" class="btn btn-solid btn-gtm-hero">Build My Resume Now</a> 
+									</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:50%;border-collapse: collapse;border: 1px solid;border-color:green;">
+									<h2 style="font-size: 1.5em;">Build a perfectly formatted resume in minutes</h2>
+									Avoid hours of online research and wasted time playing with margins in Microsoft Word and let our resume generator make a resume for you. We guide you through creating each resume section step-by-step — you just need to fill in the blanks. With our online resume builder, you can create a resume that showcases your greatest strengths and unique professional and educational experiences.
+									<div class="buttons">
+										<a href="https://app.resumegenius.com/resumes/new" class="btn btn-solid btn-gtm-hero">Build My Resume Now</a> 
+									</div>
+									</td>
+									<td style="width:50%;border: 1px solid;border-color:green;">
+										<img src="./assets/img/Resume-Builder-Skills-Feature.svg" style="margin: 0 auto;display: block;height: auto;max-width: 100%;">    
+									</td>
+								</tr>
+								<tr>
+									<td style="width:50%;border-collapse: collapse;border: 1px solid;border-color:green;">
+										<img src="./assets/img/Resume-Builder-PDF-Word-Download-Feature.svg" style="margin: 0 auto;display: block;height: auto;max-width: 100%;">    
+									</td>
+									<td style="width:50%;border: 1px solid;border-color:green;">
+									<h2 style="font-size: 1.5em;">Download your resumes to MS Word and PDF</h2>
+									Instantly download your completed resumes in Microsoft Word and PDF formats. Our professional resume templates are Applicant Tracking System friendly (and won’t be rejected by HR software), giving you a competitive edge. Send and track your job applications within our resume builder to keep your job hunt organized.
+									<div class="buttons">
+										<a href="https://app.resumegenius.com/resumes/new" class="btn btn-solid btn-gtm-hero">Build My Resume Now</a> 
+									</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:50%;border-collapse: collapse;border: 1px solid;border-color:green;">
+									<h2 style="font-size: 1.5em;">Get a free resume critique from an expert</h2>
+									We want you to land more interviews, and ultimately your dream job. To help you do that, we provide our users with an exclusive “Ask an Expert” service, featuring a real time 1-on-1 Certified Professional Resume Expert (CPRW). Our online CPRW will review your resume for accuracy and clarity, and provide clear recommendations for how to improve your resume — dramatically increasing your interview call-back rates.
+									<div class="buttons">
+										<a href="https://app.resumegenius.com/resumes/new" class="btn btn-solid btn-gtm-hero">Build My Resume Now</a> 
+									</div>
+									</td>
+									<td style="width:50%;border: 1px solid;border-color:green;">
+										<img src="./assets/img/Resume-Builder-CPRW-Feature.svg" style="margin: 0 auto;display: block;height: auto;max-width: 100%;">    
+									</td>
+								</tr>
+								</table>
+							</div>	
+						</div>
+
+						
+
+						
+						<div style="justify-content: center;text-align: center;align-items: center;vertical-align: middle;border-collapse: collapse;border: 1px solid;border-color:green;">
+							<h2 style="font-size: 1.5em;">Frequently Asked Questions</h2>
+							<br>
+							<div style="line-height: 2.0;margin:auto;width:50%;text-align: left">
+
+								<h1 style="color: #4a4a4a;">Why is Resume Genius the best free resume builder online?</h1>
+								<p>
+									<ul>
+									Our resume builder provides:<br>
+										<li>1. Professional resume templates with basic, modern, and creative styles</li>
+										<li>2. A complete and filled-out resume regardless of your work history, skill set, or education</li>
+										<li>3. A free critique from a resume expert</li>
+										<li>4. The ability to build, print, and download your resume for free in minutes</li>
+									</ul>
+									Create a professional resume today and land your dream job soon.
+								</p>
+
+								<hr style="border: 1px solid #bbb;">
+								
+								<h1 style="color: #4a4a4a;">What should I put on my resume?</h1>
+								<p>There are five main sections that every resume should include: Contact Info, Resume Introduction, Professional Experience, Education, and Skills. Keep in mind that, depending on your industry, your resume may need to include additional sections. For example, nurses should include a section about their professional licenses and certifications — which you can easily add in our resume builder. To learn more about what to put on your resume, visit our how to write a resume guide.</p>
+								
+								<hr style="border: 1px solid #bbb;">
+								
+								<h1 style="color: #4a4a4a;">Why do I need different resumes for every job application?</h1>
+								<p>No two jobs are exactly alike. Even if you apply for two positions with the exact same title, it’s extremely likely that each company highlights different skills and traits in their job descriptions. That’s why we recommend that you tailor your resume to address the specific requirements in the job description before you send out your application. Usually this would be a headache for job seekers, but our resume creator allows you to build fully-customized resumes in just minutes.</p>
+							
+								<hr style="border: 1px solid #bbb;">
+								
+								<h1 style="color: #4a4a4a;">What if I need cover letters for my resumes?</h1>
+								<p>If you need matching cover letters for your resumes, then you’ve come to the right place. Along with our resume generator, we also offer a state-of-the-art cover letter builder. The best part is that if you sign up for a Resume Genius account, you get unlimited access to both! In under ten minutes you can have a matching resume and cover letter, and be ready to apply for your dream job. We also recommend that you check out our free cover letter examples and expert guide on how to write a cover letter.</p>
+							
+								<hr style="border: 1px solid #bbb;">
+							
+								<h1 style="color: #4a4a4a;">Which resume builder template should I use?</h1>
+								<p>Choose a resume template based on your personal preference and the impression you want to make on hiring managers. We design every template so that it’s flexible enough to suit any industry, level of experience and education, or skill set. No matter which template you choose, you can be confident that it’s optimized to highlight your unique experiences and abilities — and that hiring managers will like the way it looks.</p>
+							
+								<hr style="border: 1px solid #bbb;">
+								
+								<h1 style="color: #4a4a4a;">Are there any good resume examples that I can look at?</h1>
+								<p>Yes, we offer an extensive library of free resume examples, covering all industries and 90+ job titles. Our experts, overseen by our resident CPRW Mark Slack, meticulously wrote each resume sample to demonstrate what an ideal resume in every industry should cover. Whether you aren’t sure what to include in your resume, or you just need some inspiration to get started, we highly encourage you to read a sample from your industry.</p>
+								
+								<div class="buttons">
+									<a href="https://app.resumegenius.com/resumes/new" class="btn btn-solid btn-gtm-hero">Build My Resume Now</a> 
+								</div>
+							</div>
+						</div>	
+
+						<div style="text-align: center;text-align: center;vertical-align: middle;background-color: #2b3a45;min-height:50%;border-collapse: collapse;border: 1px solid;border-color:green;">
+							<h1 style="font-size: 1.5em;color: #fff;">Our Resume Builder is Featured In</h1>
+							<br>
+							<div style="text-align: center;width:100%;display: inline-block;display: flex;align-items: center;flex-wrap: wrap;justify-content: center;">
+								<img src="./assets/img/yahoo.svg" alt="yahoo" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">    
+								<img src="./assets/img/forbes.webp" alt="forbes" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">     
+								<img src="./assets/img/business-insider.svg" alt="business-insider" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">     
+								<img src="./assets/img/the-muse.svg" alt="the-muse" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">     
+								<img src="./assets/img/mashable.webp" alt="mashable" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">     
+								<img src="./assets/img/monster.webp" alt="monster" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">     
+								<img src="./assets/img/chicago-tribune.webp" alt="chicago-tribune" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">      
+								<img src="./assets/img/logo-nbc.webp" alt="logo-nbc" style="margin-top: 0px;margin-right: 1.25em;margin-bottom: 2em;margin-left: 1.25em;">      
+							</div>
+						</div>
+						
+						<div class="footer-widgets" style="text-align: center;vertical-align: middle;background-color: #2b3a45;border-collapse: collapse;border: 1px solid;border-color:green;">
+							<hr style="position: relative; top: -10px; left:0px;border: 1px solid #bbb;">
+							
+							<table style="margin: 0 auto;width:75%;border-collapse: collapse;border: 1px solid;border-color:red;border-collapse:separate; border-spacing:1.5em;">
+							<tr valign="top">
+							<td>
+								<p style="font-weight: bold;font-size: 1.0em;color: #fff;">Resume Tools</p>
+								<a href="#">Resume Builder</a><br>
+								<a href="#">Resume Examples</a><br>
+								<a href="#">Resume Templates</a><br>
+								<a href="#">How to Write a Resume</a><br>
+								<a href="#">Resume Format</a><br>
+								<a href="#">Resume Help</a>
+							</td>
+							<td>
+								<p style="font-weight: bold;font-size: 1.0em;color: #fff;">Career Tools</p>
+								<a href="#">Thank You Note Samples & Templates</a><br>
+								<a href="#">Resignation Letter Samples</a><br>
+								<a href="#">Letter of Recommendation Templates</a><br>
+								<a href="#">Business Letter Formats</a><br>
+								<a href="#">Career Advice</a>
+							</td>
+							<td>
+								<p style="font-weight: bold;font-size: 1.0em;color: #fff;">Support</p>
+								<a href="#">Support</a><br>
+								<a href="#">Contact Us</a><br>
+								<a href="#">Forgot Password</a><br>
+								<a href="#">Terms & Conditions</a><br>
+								<a href="#">Privacy Policy</a><br>
+								<a href="#">CCPA/GDPR</a>
+							</td>
+							</tr>
+							<tr valign="top">
+							<td>
+								<p style="font-weight: bold;font-size: 1.0em;color: #fff;">Cover Letter</a></p>
+								<a href="#">Cover Letter Builder</a><br>
+								<a href="#">Cover Letter Examples</a><br>
+								<a href="#">How to Write a Cover Letter</a><br>
+								<a href="#">Cover Letter Templates</a><br>
+								<a href="#">Cover Letter Help</a>
+							</td>
+							<td>
+								<p style="font-weight: bold;font-size: 1.0em;color: #fff;">Librarians & Career Advisors</p>
+								<a href="#">RG Annual Scholarship</a><br>
+								<a href="#">FAQ</a>
+							</td>
+							<td>
+								<p style="font-weight: bold;font-size: 1.0em;color: #fff;">About RG</p>
+								<a href="#">About</a><br>
+								<a href="#">Reviews</a><br>
+								<a href="#">Blog</a><br>
+								<a href="#">Careers</a>
+							</td>
+							</tr>
+							<tr>
+							<td colspan="3">
+								<div class="textwidget custom-html-widget">
+									<img src="./assets/img/rwcc.webp" alt="" width="158" height="61">
+									<img src="./assets/img/mcafee.webp" alt="" width="166" height="61">
+									<img src="./assets/img/logo-BCA.webp" alt="" width="142" height="82">
+								</div>	
+							</td>
+							</tr>
+							</table>
+
+							<hr style="border: 1px solid #bbb;">
+
+							<table style="margin: 0 auto;width:75%;border-collapse: collapse;border: 1px solid;border-color:red;">
+							<tr valign="top">
+							<td style="width:70%;">
+								<p style="max-width: 36em;color: #fff; font-size:.75em;opacity: .75;margin: 0 0 1.75em;">
+								® 2021, Resume Genius. All rights reserved<br>
+								ResumeGenius.com is owned and operated by Sonaga Tech Limited, <br>
+								Hamilton, Zweigniederlassung Luzern with offices in Luzern Switzerland.
+								</p>
+							</td>
+							<td style="width:30%;border: 1px solid;border-color:green;">
+								<div style="text-align: right;justify-content: right;display:block;width: 100%;">
+									<img src="./assets/img/social/facebook.png" height="32px" width="32px" style="margin: 0 auto;" >
+									<img src="./assets/img/social/twitter.png" height="32px" width="32px" style="margin: 0 auto;height: auto;">
+									<img src="./assets/img/social/linkedin.png" height="32px" width="32px" style="margin: 0 auto;height: auto;">
+									<img src="./assets/img/social/instagram.png" height="32px" width="32px" style="margin: 0 auto;height: auto;">
+									<img src="./assets/img/social/snap.png" alt="" height="32px" width="32px" style="margin: 0 auto;height: auto;">
+									<img src="./assets/img/social/youtube.png" height="32px" width="32px" style="margin: 0 auto;height: auto;">
+								</div>
+							</td>
+							</tr>
+							</table>
+
+						
+
+						
+						</div>
+						
+						
+					</main>
+
+					
+					
+					
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+	<div class="menuFrame">
+		<ul class="tk-museo-sans">
+			<li>Resources</li>
+			<li>blabla</li>
+			<li>Need Help?(866)215-XXXX</li>
+			<li>Log In</li>
+		</ul>
+	</div>
+</body>
 </html>
