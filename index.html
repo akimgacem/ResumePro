@@ -21,15 +21,26 @@
 
     <link rel="stylesheet" type="text/css" href="style.css" />
 	
-
+	<script LANGUAGE="JavaScript" src='DataManager.js'></script>
 	
 	<script>
+
+	var modulo = function(a, n) {
+		return a - (n * Math.floor(a/n));
+	}
 
 	var MenuCarousselCV = {};
 	
 	MenuCarousselCV.MenuSwipe = function (val){
-		var i;
+		var i,j,subBlock,subBlockName,srcImg;
 
+		//hide old focus bloc
+		i = modulo(MenuCarousselCV.swipeFocus,MenuCarousselCV.subBlockNumber);
+		subBlock = MenuCarousselCV.subBlock[i];
+		subBlock.getElementsByClassName("subBlockContent")[0].style.visibility="hidden"; 
+		subBlock.getElementsByClassName("subBlockContentLink")[0].style.visibility="hidden"; 
+
+		
 		for(i=0;i<MenuCarousselCV.subBlockNumber;i++){
 			valCurr = MenuCarousselCV.subBlock[i].style.left;
 			valCurr = valCurr.substring(0, valCurr.length-1);
@@ -37,18 +48,39 @@
 			
 			//move left right 27.5%
 			//<-25% -> 100% ou <100%-> -25%
+			flag = false;
 			if(valCurr<-25){
 				valCurr = (-17.5+4*27.5);
 				MenuCarousselCV.swipeFocus++;
+				flag = 5;
 			}else if(valCurr>100){
 				valCurr = (-17.5+0*27.5);	
 				MenuCarousselCV.swipeFocus--;
+				flag = -5;
 			}
 				
-			MenuCarousselCV.subBlock[i].style.height="70%";
-			MenuCarousselCV.subBlock[i].style.width="25%";
+			//MenuCarousselCV.subBlock[i].style.height="70%";
+			//MenuCarousselCV.subBlock[i].style.width="25%";
 			MenuCarousselCV.subBlock[i].style.left = valCurr + "%";
-
+			MenuCarousselCV.subBlock[i].style.transform = "scale(1.0, 1.0)";
+			MenuCarousselCV.subBlock[i].style.border = "0px solid";
+			
+			//content
+			if(flag != false){
+				//console.log(MenuCarousselCV.swipeFocus + " " + i);
+				//if(i<MenuCarousselCV.swipeFocus)
+				//	j = (MenuCarousselCV.swipeFocus+2)%MenuCarousselCV.content.length;
+				//else
+				j = MenuCarousselCV.content.indexOf(MenuCarousselCV.subBlock[i].id);
+				j = modulo((j+flag),MenuCarousselCV.content.length);
+				subBlockName = MenuCarousselCV.content[j];
+				srcImg = "Resume_"+subBlockName.replace(/\s/g, '')+".png";
+				MenuCarousselCV.subBlock[i].id =  MenuCarousselCV.content[j];
+				MenuCarousselCV.subBlock[i].getElementsByClassName("subBlockImg")[0].src = './assets/img/templatePreview/'+srcImg;//MenuCarousselCV.subBlock[i].innerHTML = '<img src="./assets/img/templatePreview/'+srcImg+'" height=100% width=100%>';
+				MenuCarousselCV.subBlock[i].getElementsByClassName("subBlockName")[0].innerHTML = subBlockName;//MenuCarousselCV.subBlock[i].innerHTML += '<div style="position: absolute;left:0%;top:-5%;width:100%;">'+subBlockName+'</div>';
+				//MenuCarousselCV.subBlock[i].getElementsByClassName("subBlockContent")[0].style.display = "hidden";
+				//console.log(j);
+			}
 		}
 		
 		MenuCarousselCV.updateFocus();
@@ -56,16 +88,25 @@
 	}
 	
 	MenuCarousselCV.updateFocus = function (){
-		MenuCarousselCV.swipeFocus %= MenuCarousselCV.subBlockNumber; 
-		var style = MenuCarousselCV.subBlock[MenuCarousselCV.swipeFocus].style;
+		debugger;
+		//MenuCarousselCV.swipeFocus %= MenuCarousselCV.subBlockNumber; 
+		var subBlock = MenuCarousselCV.subBlock[modulo(MenuCarousselCV.swipeFocus,MenuCarousselCV.subBlockNumber)]; 
+		var style = subBlock.style;
 		//1.1
-		style.height = 70.0*1.1+"%";
-		style.width = 25*1.1+"%";
+		//style.height = 70.0*1.1+"%";
+		//style.width = 25*1.1+"%";
+		style.transform = "scale(1.1, 1.1)";
+		style.border = "1px solid";
+		style.borderColor = "green";
+		//var valCurr = style.left;
+		//valCurr = valCurr.substring(0, valCurr.length-1);
+		//valCurr = parseFloat(valCurr)-2.5*0.5;//6.25 = 31.25%-width:25%
+		//style.left = valCurr + "%";
 		
-		var valCurr = style.left;
-		valCurr = valCurr.substring(0, valCurr.length-1);
-		valCurr = parseFloat(valCurr)-2.5*0.5;//6.25 = 31.25%-width:25%
-		style.left = valCurr + "%";
+		
+		subBlock.getElementsByClassName("subBlockContent")[0].style.visibility="visible"; 
+		subBlock.getElementsByClassName("subBlockContentLink")[0].style.visibility="visible"; 
+		subBlock.getElementsByClassName("subBlockContentLink")[0].getElementsByClassName("Link")[0].href = 'javascript:DataManager.loadPage("'+subBlock.id+'");';
 		
 	}
 	
@@ -76,16 +117,26 @@
 		MenuCarousselCV.div.innerHTML = "";
 		
 		var i;
-		var CSSText;
+		var CSSText,srcImg,subBlockName;
 		MenuCarousselCV.subBlock = [];
 		MenuCarousselCV.subBlockNumber = 5;
 		MenuCarousselCV.swipeFocus = 2;
+		MenuCarousselCV.content = ["Angelic","Aruba","Ballinger","Belair","Belmont","Bentley","Bishop","Cailou","Casablanca","Delphini","Deluxe","Diplomat","Draco","Executive","Florence","Goodwood","Grace","Graceland","Helena","Hotshot","Layla","Nantucket","Oxford","Top Brass","Windsor"];
 		for(i=0;i<MenuCarousselCV.subBlockNumber;i++){
-			CSSText = "position: absolute;left:"+(-17.5+i*27.5)+"%;height:70%;width:25%;background-color: #fff;";
+			subBlockName = MenuCarousselCV.content[i];
+			CSSText = "position: absolute;left:"+(-17.5+i*27.5)+"%;height:70%;width:25%;background-color: #fff;transform: scale(1.0, 1.0);transform-origin: center center;transition: opacity 1.6s ease-out 0s, transform 0.5s linear 0s;";
 			MenuCarousselCV.subBlock[i] = document.createElement("div");
-			MenuCarousselCV.subBlock[i].id = "subBlock"+i;
+			MenuCarousselCV.subBlock[i].id = subBlockName;//"subBlock"+MenuCarousselCV.content[i];
 			MenuCarousselCV.subBlock[i].setAttribute("style", CSSText);
 			MenuCarousselCV.div.appendChild(MenuCarousselCV.subBlock[i]);
+			
+			//content
+			srcImg = "Resume_"+subBlockName.replace(/\s/g, '')+".png";
+			MenuCarousselCV.subBlock[i].innerHTML = '<img class="subBlockImg" src="./assets/img/templatePreview/'+srcImg+'" height=100% width=100%>';
+			MenuCarousselCV.subBlock[i].innerHTML += '<div class="subBlockName" style="position: absolute;left:0%;top:-5%;width:100%;">'+subBlockName+'</div>';
+			MenuCarousselCV.subBlock[i].innerHTML += '<div class="subBlockContentLink" style="visibility: hidden;position: absolute;left:0%;top:80%;height:100%;width:100%;"><a class="link" href="javascript:DataManager.loadPage('+MenuCarousselCV.subBlock[i].id+'");">Select Template</a></div>';
+			MenuCarousselCV.subBlock[i].innerHTML += '<div class="subBlockContent" style="visibility: hidden;position: absolute;left:0px;top:0px;width:100%;border: 1px solid;border-color:red;text-align: right;align-items: right;">[EYE]</div>';
+
 		}
 		//button
 		//Left
@@ -93,7 +144,7 @@
 		MenuCarousselCV.buttonLeft = document.createElement("div");
 		MenuCarousselCV.buttonLeft.id = "buttonLeft";
 		MenuCarousselCV.buttonLeft.setAttribute("style", CSSText);
-		MenuCarousselCV.buttonLeft.onclick = function(){MenuCarousselCV.MenuSwipe(-27.5);};
+		MenuCarousselCV.buttonLeft.onclick = function(){MenuCarousselCV.MenuSwipe(27.5);};
 		MenuCarousselCV.div.appendChild(MenuCarousselCV.buttonLeft);
 		
 		//Right
@@ -101,7 +152,7 @@
 		MenuCarousselCV.buttonRight = document.createElement("div");
 		MenuCarousselCV.buttonRight.id = "buttonLeft";
 		MenuCarousselCV.buttonRight.setAttribute("style", CSSText);
-		MenuCarousselCV.buttonRight.onclick = function(){MenuCarousselCV.MenuSwipe(27.5);};
+		MenuCarousselCV.buttonRight.onclick = function(){MenuCarousselCV.MenuSwipe(-27.5);};
 		MenuCarousselCV.div.appendChild(MenuCarousselCV.buttonRight);
 		
 		
@@ -109,7 +160,7 @@
 		//<-25% -> 100% ou <100%-> -25%
 		
 		//drag
-		
+		MenuCarousselCV.updateFocus();
 		
 		
 	};
